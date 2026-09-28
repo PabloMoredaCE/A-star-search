@@ -18,6 +18,7 @@ int main() {
   std::string line;
   std::vector<std::vector<int>> grid;
   std::pair<int,int> rob_pos;
+  std::pair<int,int> destination;
 
   while(std::getline(input, line)) {
     std::istringstream row{line};
@@ -28,6 +29,11 @@ int main() {
       if(value == 0) {
         rob_pos.first = static_cast<int>(grid.size());
         rob_pos.second = static_cast<int>(actual_row.size());
+      }
+
+      if(value == 10) {
+        destination.first = static_cast<int>(grid.size());
+        destination.second = static_cast<int>(actual_row.size());
       }
 
       actual_row.push_back(value);

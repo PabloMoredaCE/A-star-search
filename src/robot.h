@@ -22,8 +22,6 @@ class Robot {
 
   bool checkPos(const std::pair<int,int>& pos, const Environment& environment) const;
 
-
-
 };
 
 #endif
