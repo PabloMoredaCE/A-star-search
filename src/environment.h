@@ -19,6 +19,9 @@ class Environment {
       } else return grid_[0].size();
     }
 
+    int GetCell(int row, int col) const { return grid_[row][col]; }
+
+    bool checkEnv(const Environment& environment) const;
     friend std::ostream& operator<<(std::ostream& os, 
       const Environment& environment);
 

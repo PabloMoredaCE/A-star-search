@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <utility>
 
 int main() {
   std::ifstream input{"test.txt"};
@@ -16,6 +17,7 @@ int main() {
 
   std::string line;
   std::vector<std::vector<int>> grid;
+  std::pair<int,int> rob_pos;
 
   while(std::getline(input, line)) {
     std::istringstream row{line};
@@ -23,6 +25,11 @@ int main() {
     int value;
 
     while(row >> value) { 
+      if(value == 0) {
+        rob_pos.first = static_cast<int>(grid.size());
+        rob_pos.second = static_cast<int>(actual_row.size());
+      }
+
       actual_row.push_back(value);
     }
 
@@ -30,6 +37,7 @@ int main() {
   }
 
   Environment environment(grid);
+  Robot robot(rob_pos);
 
   return 0;
 }
