@@ -18,22 +18,14 @@ The environment contains traversable cells, obstacles, a starting position, and 
 The environment is represented as a rectangular grid of integers.
 
 Special values:
+
 0   -> Initial position
+
 10  -> Destination
+
 -1  -> Obstacle
 
 Any other value represents the cost of entering that cell.
-
-Example:
-
-2 2 2 2 2 2 10
-2 2 2 2 -1 2 2
-2 2 2 8 -1 8 8
-2 2 0 2 -1 8 8
-2 2 2 2 2 5 2
-2 2 -1 -1 -1 -1 -1
-2 2 2 2 2 2 2
-
 
 ## Movement
 
@@ -64,33 +56,6 @@ h(n) -> estimated cost to the destination
 The heuristic used is a weighted Manhattan distance:
 h(n) = 2 * (|destination_row - row| + |destination_col - column|)
 
-
-## Project Structure
-
-A-star-search/
-├── README.md
-├── Makefile
-│
-├── src/
-│   ├── main.cpp
-│   │
-│   ├── environment.h
-│   ├── environment.cpp
-│   │
-│   ├── robot.h
-│   ├── robot.cpp
-│   │
-│   ├── node.h
-│   │
-│   ├── astar.h
-│   └── astar.cpp
-│
-├── tests/
-│   ├── test.txt
-│   └── ...
-│
-└── output/
-    └── ...
 
 
 ## Main Components
