@@ -16,6 +16,9 @@ class Robot {
   void moveLeft(const Environment& environment);
   void moveRight(const Environment& environment);
 
+  void setPos(const std::pair<int, int>& pos) { pos_ = pos; }
+  std::pair<int, int> getPos() const { return pos_; }
+
   private:
   //Current position
   std::pair<int,int> pos_;
