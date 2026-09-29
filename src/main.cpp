@@ -1,5 +1,7 @@
 #include "environment.h"
 #include "robot.h"
+#include "node.h"
+#include "search.h"
 
 #include <iostream>
 #include <fstream>
@@ -44,6 +46,13 @@ int main() {
 
   Environment environment(grid);
   Robot robot(rob_pos);
+
+  Node initial_nd{rob_pos, 0};
+  Node final_nd{destination, 2};
+
+  Search a_star;
+  a_star.addOpen(initial_nd);
+
 
   return 0;
 }
