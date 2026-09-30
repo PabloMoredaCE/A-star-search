@@ -96,7 +96,7 @@ class Search{
     * @param final_nd Nodo destino utilizado para calcular la heuristica.
     * @return Indice del nodo seleccionado en la lista de abiertos.
     */
-    std::size_t getRandomWorstOpenIndex(const Node& final_nd);
+    std::size_t getRandomOpenIndex(const Node& final_nd);
     /**
      * @brief Genera los sucesores de un nodo
      * 
