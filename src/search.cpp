@@ -46,7 +46,7 @@ int Search::evaluationCal(const Node& actual_nd, const Node& final_nd) const {
 
 
 
-std::size_t Search::getRandomBestOpenIndex(const Node& final_nd) {
+std::size_t Search::getRandomWorstOpenIndex(const Node& final_nd) {
   if (open_nodes_.empty()) {
     throw std::runtime_error("No hay nodos abiertos");
   }
@@ -56,18 +56,18 @@ std::size_t Search::getRandomBestOpenIndex(const Node& final_nd) {
     return 0;
   }
 
-  std::size_t best_index = 0;
-  std::size_t second_best_index = 1;
+  std::size_t worst_index = 0;
+  std::size_t second_worst_index = 1;
 
-  int best_f = evaluationCal(open_nodes_[best_index], final_nd);
+  int worst_f = evaluationCal(open_nodes_[worst_index], final_nd);
 
-  int second_best_f = evaluationCal(open_nodes_[second_best_index], final_nd);
+  int second_worst_f = evaluationCal(open_nodes_[second_worst_index], final_nd);
 
   // Nos aseguramos de que best_index contiene inicialmente
   // el nodo con menor f(n).
-  if (second_best_f < best_f) {
-    std::swap(best_index, second_best_index);
-    std::swap(best_f, second_best_f);
+  if (second_worst_f > worst_f) {
+    std::swap(worst_index, second_worst_index);
+    std::swap(worst_f, second_worst_f);
   }
 
   // Buscamos los dos menores valores de f(n).
@@ -75,16 +75,16 @@ std::size_t Search::getRandomBestOpenIndex(const Node& final_nd) {
 
     int current_f = evaluationCal(open_nodes_[i], final_nd);
 
-    if (current_f < best_f) {
-      second_best_index = best_index;
-      second_best_f = best_f;
+    if (current_f > worst_f) {
+      second_worst_index = worst_index;
+      second_worst_f = worst_f;
 
-      best_index = i;
-      best_f = current_f;
+      worst_index = i;
+      worst_f = current_f;
 
-    } else if (current_f < second_best_f) {
-      second_best_index = i;
-      second_best_f = current_f;
+    } else if (current_f > second_worst_f) {
+      second_worst_index = i;
+      second_worst_f = current_f;
     }
   }
 
@@ -92,10 +92,10 @@ std::size_t Search::getRandomBestOpenIndex(const Node& final_nd) {
   std::uniform_int_distribution<int> distribution(0, 1);
 
   if (distribution(generator_) == 0) {
-    return best_index;
+    return worst_index;
   }
 
-  return second_best_index;
+  return second_worst_index;
 }
 
 
@@ -334,7 +334,7 @@ bool Search::run(const Node& initial_nd, const Node& final_nd, Robot& robot,
     printIter(terminal, iteration);
     printIter(file, iteration);
 
-    std::size_t best_index = getRandomBestOpenIndex(final_nd);
+    std::size_t best_index = getRandomWorstOpenIndex(final_nd);
 
     Node current = open_nodes_[best_index];
     open_nodes_.erase(open_nodes_.begin() + best_index);

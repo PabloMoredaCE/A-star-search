@@ -87,16 +87,16 @@ class Search{
     std::mt19937 generator_{std::random_device{}()};
 
     /**
-    * @brief Selecciona aleatoriamente uno de los dos mejores nodos abiertos.
+    * @brief Selecciona aleatoriamente uno de los dos peores nodos abiertos.
     *
-    * Se buscan los dos nodos de la lista de abiertos con menor valor
+    * Se buscan los dos nodos de la lista de abiertos con mayor valor
     * de f(n) y se selecciona uno de ellos al azar.
     * Si solo existe un nodo abierto, se selecciona dicho nodo.
     *
     * @param final_nd Nodo destino utilizado para calcular la heuristica.
     * @return Indice del nodo seleccionado en la lista de abiertos.
     */
-    std::size_t getRandomBestOpenIndex(const Node& final_nd);
+    std::size_t getRandomWorstOpenIndex(const Node& final_nd);
     /**
      * @brief Genera los sucesores de un nodo
      * 
