@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 /**
  * @file search.cpp
@@ -44,20 +45,57 @@ int Search::evaluationCal(const Node& actual_nd, const Node& final_nd) const {
 */
 
 
-std::size_t Search::getBestOpenIndex(const Node& final_nd) const {
-  std::size_t best_index = 0;
-  int best_f = evaluationCal(open_nodes_[0], final_nd);
 
-  for (std::size_t i = 1; i < open_nodes_.size(); ++i) {
+std::size_t Search::getRandomBestOpenIndex(const Node& final_nd) {
+  if (open_nodes_.empty()) {
+    throw std::runtime_error("No hay nodos abiertos");
+  }
+
+  // Si solamente queda un nodo, no hay nada que sortear.
+  if (open_nodes_.size() == 1) {
+    return 0;
+  }
+
+  std::size_t best_index = 0;
+  std::size_t second_best_index = 1;
+
+  int best_f = evaluationCal(open_nodes_[best_index], final_nd);
+
+  int second_best_f = evaluationCal(open_nodes_[second_best_index], final_nd);
+
+  // Nos aseguramos de que best_index contiene inicialmente
+  // el nodo con menor f(n).
+  if (second_best_f < best_f) {
+    std::swap(best_index, second_best_index);
+    std::swap(best_f, second_best_f);
+  }
+
+  // Buscamos los dos menores valores de f(n).
+  for (std::size_t i = 2; i < open_nodes_.size(); ++i) {
+
     int current_f = evaluationCal(open_nodes_[i], final_nd);
 
     if (current_f < best_f) {
-      best_f = current_f;
+      second_best_index = best_index;
+      second_best_f = best_f;
+
       best_index = i;
+      best_f = current_f;
+
+    } else if (current_f < second_best_f) {
+      second_best_index = i;
+      second_best_f = current_f;
     }
   }
 
-  return best_index;
+  // Elegimos al azar uno de los dos mejores nodos.
+  std::uniform_int_distribution<int> distribution(0, 1);
+
+  if (distribution(generator_) == 0) {
+    return best_index;
+  }
+
+  return second_best_index;
 }
 
 
@@ -296,7 +334,7 @@ bool Search::run(const Node& initial_nd, const Node& final_nd, Robot& robot,
     printIter(terminal, iteration);
     printIter(file, iteration);
 
-    std::size_t best_index = getBestOpenIndex(final_nd);
+    std::size_t best_index = getRandomBestOpenIndex(final_nd);
 
     Node current = open_nodes_[best_index];
     open_nodes_.erase(open_nodes_.begin() + best_index);

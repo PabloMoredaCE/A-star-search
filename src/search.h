@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <random>
 
 /**
  * @brief Implementacion del algoritmo de busqueda A*
@@ -82,14 +83,20 @@ class Search{
     std::vector<std::pair<int,int>> path_;
     int total_cost_{0};
 
+    //Random generator
+    std::mt19937 generator_{std::random_device{}()};
 
     /**
-     * @brief Obtener el mejor nodo de la lista de abiertos (menor f(n))
-     * @param final_nd Nodo destino
-     * @return Indice del mejor nodo de la lista de abiertos
-     */
-    std::size_t getBestOpenIndex(const Node& final_nd) const;
-
+    * @brief Selecciona aleatoriamente uno de los dos mejores nodos abiertos.
+    *
+    * Se buscan los dos nodos de la lista de abiertos con menor valor
+    * de f(n) y se selecciona uno de ellos al azar.
+    * Si solo existe un nodo abierto, se selecciona dicho nodo.
+    *
+    * @param final_nd Nodo destino utilizado para calcular la heuristica.
+    * @return Indice del nodo seleccionado en la lista de abiertos.
+    */
+    std::size_t getRandomBestOpenIndex(const Node& final_nd);
     /**
      * @brief Genera los sucesores de un nodo
      * 
