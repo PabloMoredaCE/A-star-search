@@ -10,6 +10,13 @@
 #include <utility>
 #include <vector>
 
+/**
+ * @file main.cpp
+ * @brief Inicio del programa
+ * Lectura del entorno desde un fichero de entrada, 
+ * crea los objetos y ejecuta el algoritmo A*
+ */
+
 int main(int argc, char* argv[]) {
 
   if(argc != 4) {

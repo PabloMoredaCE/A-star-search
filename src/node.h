@@ -3,6 +3,14 @@
 
 #include <utility>
 
+
+/**
+ * @brief Representacion de un estado en la búsqueda A*
+ * 
+ * Un nodo almacena la posición (actual) del robot, el coste
+ * de entrada a la celda, el coste acumulado desde el inicio 
+ * y cierta informacion sobre el nodo padre
+ */
 struct Node {
   std::pair<int, int> position{0,0}; //(r,c)
   int cost{0}; //w(s)

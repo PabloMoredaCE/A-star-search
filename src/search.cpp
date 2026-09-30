@@ -6,6 +6,11 @@
 #include <algorithm>
 #include <iostream>
 
+/**
+ * @file search.cpp
+ * @brief Implementacion del algoritmo de busqeuda A*
+ */
+
 int Search::heuristicCal(const Node& actual_nd, const Node& final_nd) const {
       if (actual_nd.position == final_nd.position) { return 0; }
       int row = std::abs(final_nd.position.first - actual_nd.position.first);

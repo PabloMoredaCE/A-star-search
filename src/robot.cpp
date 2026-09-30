@@ -1,5 +1,9 @@
 #include "robot.h"
 
+/**
+ * @file robot.cpp
+ * @brief Implementacion de los movimientos del robot
+ */
 
 bool Robot::checkPos(const std::pair<int,int>& pos, const Environment& environment) const {  
   int row = pos.first;
