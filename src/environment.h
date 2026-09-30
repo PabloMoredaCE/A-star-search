@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <fstream>
+#include <utility>
+#include <iostream>
 
 
 class Environment {
@@ -24,6 +26,8 @@ class Environment {
     bool checkEnv(const Environment& environment) const;
     friend std::ostream& operator<<(std::ostream& os, 
       const Environment& environment);
+
+    void printPath(std::ostream& os, const std::vector<std::pair<int,int>>& path) const;
 
   private:
 

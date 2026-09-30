@@ -7,7 +7,7 @@ bool Robot::checkPos(const std::pair<int,int>& pos, const Environment& environme
 
   if (row < 0 || col < 0) { return false; }
 
-  if (row >= environment.GetRows() || col >= environment.GetCols()) {
+  if (row >= static_cast<int>(environment.GetRows()) || col >= static_cast<int>(environment.GetCols())) {
     return false;
   }
 

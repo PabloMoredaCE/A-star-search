@@ -8,9 +8,18 @@
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
 
-int main() {
-  std::ifstream input{"test.txt"};
+int main(int argc, char* argv[]) {
+
+  if(argc != 4) {
+    std::cerr << "Uso: "
+              << argv[0]
+              << " <fichero_entrada> <salida_mapa> <salida_busqueda>\n"; 
+    return 1;
+  }
+
+  std::ifstream input{argv[1]};
 
   if (!input) {
     std::cerr << "No se pudo abrir el archivo\n";
@@ -47,12 +56,37 @@ int main() {
   Environment environment(grid);
   Robot robot(rob_pos);
 
-  Node initial_nd{rob_pos, 0};
-  Node final_nd{destination, 2};
+  Node initial_nd;
+  initial_nd.position = rob_pos;
+  initial_nd.cost = 0;
+  initial_nd.accCost = 0;
+  initial_nd.has_parent = false;
+
+  Node final_nd;
+  final_nd.position = destination;
+  final_nd.cost = 2;
+
+  std::ofstream search_out{argv[2]};
+  std::ofstream path_out{argv[3]};
+
+  if(!search_out) {
+    std::cerr << "No se pudo crear el archivo de salida de busqueda\n";
+    return 1;
+  }
+
+  if(!path_out) {
+    std::cerr << "No se pudo crear el archivo de salida del camino\n";
+    return 1;
+  }
 
   Search a_star;
-  a_star.addOpen(initial_nd);
+  bool found = a_star.run(initial_nd, final_nd, robot, environment, std::cout, search_out);
 
+  if(found) {
+    environment.printPath(path_out, a_star.getPath());
+  } else {
+    path_out << "No se encontro ningun camino\n"; 
+  }
 
   return 0;
 }
